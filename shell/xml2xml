@@ -1,0 +1,29 @@
+#! /usr/bin/env bash
+# xsltproc blackbourne_v2.xsl all_formatted.xml | xmllint --format - --output new_all.xml
+#
+# Ties the tools 'xsltproc', 'xmllint' and 'tee' together to provide the xml to xml
+# transformation pipeline via an xslt.
+#
+# Jason Goodell 6/1/2011
+# Argument = XSL_FILE INPUT_XML_FILE OUTPUT_XML_FILE
+
+usage() 
+{
+    cat << EOF
+usage: $0 options XSL_FILE INPUT_XML_FILE OUTPUT_XML_FILE
+
+Ties the tools 'xsltproc' and 'xmllint' together to provide an xml to xml
+transformation pipeline via an xslt.
+
+EOF
+}
+
+if [[ $# -eq 2 ]]
+then
+    xsltproc $1 $2 | xmllint --format -
+elif [[ $# -eq 3 ]]
+then
+    xsltproc $1 $2 | xmllint --output $3 --format -
+else
+    usage
+fi
